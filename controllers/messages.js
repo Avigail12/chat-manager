@@ -6,6 +6,7 @@ const axios = require('axios');
 const stringify = require('csv-stringify');
 const ObjectsToCsv = require('objects-to-csv')
 
+// insert some messages from text file
 async function createManyMessages(req, res) {
 
         if(!req.body.source_file_location){
@@ -33,7 +34,6 @@ async function createManyMessages(req, res) {
             if(columns[0] != "from_name" | columns[1] != "to_name" | columns[2] != "message"| columns[3] != "date" | columns[4] != "key"){
                 return res.status(400).json({ status: "fail", message: 'The colums name wrong' })
             }
-            console.log('yyyyyyy');
             resp = await insertAllMessages(result,req.body.source_file_location)
         } catch (error) {
             return res.status(400).json({ status: "fail", message: error.message })
@@ -42,6 +42,7 @@ async function createManyMessages(req, res) {
        return res.status(200).json({ status: "ok", payload: resp })
   }
 
+  // send post req to chat-assignment server and update key colums
   async function insertAllMessages(rows,path){
 
       var data = []
